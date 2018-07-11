@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! | </title>
+
+    <% include common/styles %>
+
+    <!-- TinyMCE-->
+    <script src="/public/admin/vendors/tinymce/tinymce.min.js"></script>
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <% include common/sidebar %>
+
+            <!-- top navigation -->
+            <% include common/nav %>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+                            <h3>Form Elements</h3>
+                        </div>
+                
+                        <div class="title_right">
+                            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search for...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">Go!</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                
+                
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Form Design
+                                <small>different form elements</small>
+                            </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="#">Settings 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Settings 2</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="close-link">
+                                        <i class="fa fa-close"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 center-margin">
+                                <form id="demo-form2" class="form-horizontal form-label-left">
+                                    <div class="form-group">
+                                        <label>Tiêu đề:</label>
+                                        <input type="text" class="form-control" name="title">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mô tả:</label>
+                                        <textarea id="message" class="form-control" name="description"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nội dung:</label>
+                                        <textarea id="tinymce" name="content" ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tác giả:</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Chuyên mục</label>
+                                        <select class="form-control">
+                                            <option>Choose option</option>
+                                            <option>Option one</option>
+                                            <option>Option two</option>
+                                            <option>Option three</option>
+                                            <option>Option four</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">Đăng bài</button>
+                                </form>
+                            </div>
+                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+
+            <!-- footer content -->
+            <% include common/footer %>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <% include common/scripts %>
+    <script>
+        tinymce.init({
+            selector: 'textarea#tinymce',
+            height: 500,
+            plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help',
+            toolbar: "insertfile undo redo | styleselect | fontsizeselect | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            images_upload_url: 'postAcceptor.php',
+
+            images_upload_handler: function (blobInfo, success, failure) {
+                setTimeout(function () {
+                    success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
+                }, 2000);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
