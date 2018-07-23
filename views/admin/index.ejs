@@ -24,7 +24,17 @@
             <!-- /top navigation -->
 
             <!-- page content -->
-            <div class="right_col" role="main"></div>
+            <div class="right_col" role="main">
+                <% if (flash_messages) { %>
+                    <% for (let prop in flash_messages) { %>
+                        <% flash_messages[prop].forEach(err => { %>
+                            <div class="alert alert-<%= prop %>">
+                                <%= err %>
+                            </div>
+                        <% }) %>   
+                    <% } %>
+                <% } %>
+            </div>
             <!-- /page content -->
 
             <!-- footer content -->
