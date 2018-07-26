@@ -2,7 +2,20 @@ const express = require('express');
 const { check, validationResult } = require('express-validator/check');
 const User = require('../models/users/user.model');
 const Post = require('../models/blog/blog.model');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
+
+router.use((req, res, next) => {
+    res.locals.flash_messages = req.session.flash;
+    delete req.session.flash;
+    next();
+});
+
+router.use(['/login', 'register'] ,(req, res, next) => {
+    if (req.session) return res.redirect('/admin');
+
+    res.redirect('/admin/login');
+})
 
 router.get('/', (req, res) => {
     res.render('admin/index');
@@ -33,6 +46,7 @@ router.post('/register', (req, res) => {
         password,
     });
 
+
     cUser.save((err, user) => {
         if (err) {
             console.log('>>> error register', err);
@@ -59,10 +73,14 @@ router.post('/login', (req, res) => {
         }
 
         if (user) {
-            if (user.password === password) {
+            if (bcrypt.compareSync(password, user.password)) {
+                console.log(req.session);
+                req.flash('success', 'Login successfully!');
                 res.redirect('/admin');
             } else {
                 console.log('Sai mat khau');
+                req.flash('danger', 'Sai mật khẩu');
+                res.redirect('/admin/login');
             }
         } else {
             console.log('Khong tim thay username');

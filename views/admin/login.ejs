@@ -32,6 +32,15 @@
           <section class="login_content">
             <form action="/admin/login" method="post">
               <h1>Login Form</h1>
+              <% if (flash_messages) { %>
+                  <% for (let prop in flash_messages) { %>
+                    <% flash_messages[prop].forEach(err => { %>
+                        <div class="alert alert-<%= prop %>">
+                          <%= err %>
+                        </div>
+                        <% }) %>
+                    <% } %> 
+              <% } %>  
               <div>
                 <input type="text" class="form-control" placeholder="Username" required="" name="username" />
               </div>
