@@ -83,26 +83,26 @@
                             <br />
 
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 center-margin">
-                                <form id="demo-form2" class="form-horizontal form-label-left">
+                                <form action="/admin/post/add" method="post" class="form-horizontal form-label-left">
                                     <div class="form-group">
                                         <label>Tiêu đề:</label>
-                                        <input type="text" class="form-control" name="title">
+                                        <input type="text" class="form-control" name="title" value="<%= typeof title !== 'undefined' ? title : '' %>">
                                     </div>
                                     <div class="form-group">
                                         <label>Mô tả:</label>
-                                        <textarea id="message" class="form-control" name="description"></textarea>
+                                        <textarea id="message" class="form-control" name="description"><%= typeof description !== 'undefined' ? description : '' %></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Nội dung:</label>
-                                        <textarea id="tinymce" name="content" ></textarea>
+                                        <textarea id="tinymce" name="content" ><%= typeof content !== 'undefined' ? content : '' %></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Tác giả:</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="author" disabled value="<%= typeof author !== 'undefined' ? author : '' %>">
                                     </div>
                                     <div class="form-group">
                                         <label>Chuyên mục</label>
-                                        <select class="form-control">
+                                        <select class="form-control" name="category">
                                             <option>Choose option</option>
                                             <option>Option one</option>
                                             <option>Option two</option>
@@ -131,15 +131,32 @@
     <script>
         tinymce.init({
             selector: 'textarea#tinymce',
-            height: 500,
-            plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help',
-            toolbar: "insertfile undo redo | styleselect | fontsizeselect | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-            images_upload_url: 'postAcceptor.php',
-
-            images_upload_handler: function (blobInfo, success, failure) {
-                setTimeout(function () {
-                    success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
-                }, 2000);
+            plugins: [
+                'advlist autoresize autolink lists link image charmap preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools toc'
+            ],
+            toolbar1: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media',
+            toolbar2: 'preview | forecolor backcolor emoticons |  fontselect fontsizeselect',
+            image_title: true,
+            image_advtab: true,
+            automatic_uploads: true,
+            images_upload_url: '',
+            file_picker_types: 'image',
+            file_picker_callback: function(cb, value, meta) {
+                const input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.onchange = function() {
+                    const file = this.files[0];
+                    const id = 'blobid' + (new Date()).getTime();
+                    const blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                    const blobInfo = blobCache.create(id, file);
+                    blobCache.add(blobInfo);
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+                input.click();
             }
         });
     </script>
